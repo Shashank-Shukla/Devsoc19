@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 cap=cv2.VideoCapture(0)
 while(cap.isOpened()):
-    fc=cv2.CascadeClassifier('https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml')
+    fc=cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
     ret,frame=cap.read()
     frame=cv2.flip(frame,1)
 #    gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
@@ -17,8 +17,8 @@ while(cap.isOpened()):
 # ERRORRRRRRR!!!!!!!!!!!!!!!!!!
     for (x,y,w,h) in faces:
         cv2.rectangle(frame,(x,y),(x+w,y+h),(255,100,0),1)
-    cv2.rectangle(frame,((0,frame.shape[0]-25)),(270, image.shape[0]), (255,255,255), -1)
-    cv2.putText(frame, "Number of people: " + str(faces.shape[0]), (0,image.shape[0] -10), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0,0,0), 1)
+    cv2.rectangle(frame,((0,frame.shape[0]-25)),(270, frame.shape[0]), (255,255,255), -1)
+    cv2.putText(frame, "Number of people: " + str(faces.shape[0]), (0,frame.shape[0] -10), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0,0,0), 1)
     cv2.imshow('Density',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
