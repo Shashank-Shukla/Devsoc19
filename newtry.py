@@ -10,7 +10,12 @@ while(cap.isOpened()):
     cv2.imshow('frame',hsv)
     cap.get(3)
     cap.get(4)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    lower_lim = np.array([0,20,70], dtype=np.uint8)
+    upper_lim = np.array([20,255,255], dtype=np.uint8)
+    mask = cv2.inRange(hsv, lower_lim, upper_lim)
+    mask = cv2.dilate(mask,kernel,iterations = 4)
+    mask = cv2.GaussianBlur(mask,(5,5),100)
+    if cv2.waitKey(1000) & 0xFF == ord('q'):
         break
     #cv2.imshow('frame',frame)
 cap.release()
