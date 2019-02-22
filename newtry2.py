@@ -18,7 +18,7 @@ while(cap.isOpened()):
     for (x,y,w,h) in faces:
         cv2.rectangle(frame,(x,y),(x+w,y+h),(255,100,0),1)
     cv2.rectangle(frame,((0,frame.shape[0]-25)),(270, frame.shape[0]), (255,255,255), -1)
-    cv2.putText(frame, "Number of people: " + str(faces.shape[0]), (0,frame.shape[0] -10), cv2.FONT_HERSHEY_TRIPLEX, 0.5, (0,0,0), 1)
+    cv2.putText(frame, "Number of people: " + str(faces.shape[0]), (0,frame.shape[0] -10), cv2.FONT_ITALIC, 0.5, (0,0,0), 1)
     cv2.imshow('Density',frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
