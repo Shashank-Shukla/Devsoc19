@@ -4,6 +4,7 @@ cap=cv2.VideoCapture(0)
 while(cap.isOpened()):
     ret,frame=cap.read()
     frame=cv2.flip(frame,1)
+    roi=frame[100:900, 100:900]
     cv2.rectangle(frame,(100,100),(300,300),(0,255,0),0)
     hsv = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
     cv2.imshow('frame',hsv)
