@@ -1,6 +1,8 @@
 import cv2
-import time
+from time import sleep
+from urllib.request import urlopen
 import numpy as np
+import sys
 cap=cv2.VideoCapture(0)
 while(cap.isOpened()):
     fc=cv2.CascadeClassifier('C:\\Project\\DevSoc19\\haarcascade_frontalface_default.xml')
@@ -20,15 +22,25 @@ while(cap.isOpened()):
         for (x,y,w,h) in faces:
             cv2.rectangle(frame,(x,y),(x+w,y+h),(255,100,0),1)
         cv2.rectangle(frame,((0,frame.shape[0]-25)),(270, frame.shape[0]), (255,255,255), -1)
-        cv2.putText(frame, "Number of people: " + str(faces.shape[0]), (0,frame.shape[0] -10), cv2.FONT_ITALIC, 0.5, (0,0,0), 1)
+    #Position of people:::
+        #cv2.putText(frame, "Number of people: " + str(faces.shape[0]), (0,frame.shape[0] -10), cv2.FONT_ITALIC, 0.5, (0,0,0), 1)
+    #Sending data to thingspeak
+        fout=urlopen('http://api.thingspeak.com/update?api_key=DEJXNKA7W5TONKWC&field1='+str(faces.shape[0]))
+        fout.read()
+        fout.close()
         cv2.imshow('Density',frame)
+        print("Upload Successful!")
     except AttributeError:
         print("No person in scope!!!")
+        a=0
+        fout=urlopen('http://api.thingspeak.com/update?api_key=DEJXNKA7W5TONKWC&field1='+str(a))
+        fout.read()
+        fout.close()
         continue
     #cv2.waitkey(3000)
-    #time.sleep(1)          Too much laggy --Need 2 remove L8R
-    finally:
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+    #time.sleep(2)          #Too much laggy --Need 2 remove L8R
+    #finally:
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 cap.release()
 cv2.destroyAllWindows()
